@@ -1,11 +1,12 @@
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path(__file__).resolve().parent / "resourse" / "drinks.db"
+RESOURSE_DIR = Path(__file__).resolve().parent.parent / "resourse"
+DB_PATH = RESOURSE_DIR / "drinks.db"
 
 
 def conn() -> sqlite3.Connection:
-    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    RESOURSE_DIR.mkdir(parents=True, exist_ok=True)
     c = sqlite3.connect(str(DB_PATH))
     c.execute("PRAGMA foreign_keys = ON")
     c.row_factory = sqlite3.Row

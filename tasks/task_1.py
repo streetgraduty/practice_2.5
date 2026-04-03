@@ -2,7 +2,8 @@ import sqlite3
 from pathlib import Path
 from typing import List, Optional
 
-DB_PATH = Path(__file__).resolve().parent / "resourse" / "task_1.db"
+RESOURSE_DIR = Path(__file__).resolve().parent.parent / "resourse"
+DB_PATH = RESOURSE_DIR / "task_1.db"
 
 
 class Student:
@@ -35,7 +36,7 @@ def student_as_text(s: Student) -> str:
 
 
 def get_connection() -> sqlite3.Connection:
-    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    RESOURSE_DIR.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(DB_PATH))
     conn.row_factory = sqlite3.Row
     return conn

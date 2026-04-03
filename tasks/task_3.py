@@ -1,26 +1,21 @@
-import os
 import sqlite3
 import tkinter as tk
+from pathlib import Path
 from tkinter import messagebox, scrolledtext, ttk
 
 import requests
 
 URL = "https://www.cbr-xml-daily.ru/daily_json.js"
-DB_PATH = os.path.join(os.path.dirname(__file__), "resourse", "currency.db")
+RESOURSE_DIR = Path(__file__).resolve().parent.parent / "resourse"
+DB_PATH = RESOURSE_DIR / "currency.db"
 
 data = None
 groups: dict[str, list[str]] = {}
 
 
-def ensure_db_dir():
-    d = os.path.dirname(DB_PATH)
-    if d:
-        os.makedirs(d, exist_ok=True)
-
-
 def get_db():
-    ensure_db_dir()
-    conn = sqlite3.connect(DB_PATH)
+    RESOURSE_DIR.mkdir(parents=True, exist_ok=True)
+    conn = sqlite3.connect(str(DB_PATH))
     conn.execute(
         """
         CREATE TABLE IF NOT EXISTS groups (
